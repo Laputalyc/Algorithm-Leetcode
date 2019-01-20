@@ -92,7 +92,7 @@
 [001]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/001/README.md
 [007]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/007/README.md
 [009]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/009/README.md
-[013]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/013/README.md
+[013]: https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/013/README.md
 [014]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/014/README.md
 [020]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/020/README.md
 [021]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/021/README.md
