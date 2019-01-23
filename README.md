@@ -1,16 +1,23 @@
 # Algorithm-Leetcode
 
+## 算法基础知识
 
+### 基本算法
 
+### 基本结构
 
-## Easy
+* [单调栈](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/%E5%8D%95%E8%B0%83%E6%A0%88/README.md)
+
+## Leetcode题解
+
+### 简单
 
 | #    | Title                                    | Tag                                      |
 | :--- | :--------------------------------------- | :--------------------------------------- |
-| 1    | [罗马数字转整数][013]                      | Array, Hash Table                        |
-| 7    | [Reverse Integer][007]                   | Math                                     |
+| 13   | [罗马数字转整数][013]                      | 数学，字符串                         |
+| 14   | [最长公共前缀][014]                   | 字符串                                     |
 | 9    | [Palindrome Number][009]                 | Math                                     |
-| 13   | [Roman to Integer][013]                  | Math, String                             |
+| 13   | [单调栈](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/%E5%8D%95%E8%B0%83%E6%A0%88/README.md)                  | Math, String                             |
 | 14   | [Longest Common Prefix][014]             | String                                   |
 | 20   | [Valid Parentheses][020]                 | Stack, String                            |
 | 21   | [Merge Two Sorted Lists][021]            | Linked List                              |
@@ -42,7 +49,7 @@
 | 543  | [Diameter of Binary Tree][543]           | Tree                                     |
 
 
-## Medium
+## 中等
 
 | #    | Title                                    | Tag                              |
 | :--- | :--------------------------------------- | :------------------------------- |
@@ -69,7 +76,7 @@
 | 554  | [Brick Wall][554]                        | Hash Table                       |
 
 
-## Hard
+## 困难
 
 | #    | Title                                    | Tag                                      |
 | :--- | :--------------------------------------- | :--------------------------------------- |
@@ -93,7 +100,7 @@
 [007]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/007/README.md
 [009]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/009/README.md
 [013]: https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/013/README.md
-[014]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/014/README.md
+[014]: https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/014/README.md
 [020]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/020/README.md
 [021]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/021/README.md
 [026]: https://github.com/Blankj/awesome-java-leetcode/blob/master/note/026/README.md
