@@ -4,6 +4,8 @@
 
 ### 基本算法
 
+* [二叉树遍历](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/README.md)
+
 ### 基本结构
 
 * [单调栈](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/note/%E5%8D%95%E8%B0%83%E6%A0%88/README.md)
