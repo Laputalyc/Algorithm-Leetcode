@@ -4,7 +4,7 @@
 
 所谓二叉树的基本遍历算法是指我们通常所说的先序遍历、中序遍历、后续遍历、层序遍历。这样说主要是为了区分最后我们将介绍的Morris遍历。对于前三种遍历会介绍递归版本和非递归版本，对于层序遍历只会介绍非递归版本。
 
-## 1.1 先序遍历（PreOrderTraversal）
+## 1.1 [先序遍历（PreOrderTraversal）](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/src/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/PreOrderTraversal.java)
 
 ### 1.1.1 非递归版本
 
@@ -53,7 +53,7 @@
     }
 ```
 
-## 1.2 中序遍历（InOrderTraversal）
+## 1.2 [中序遍历（InOrderTraversal）](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/src/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/InOrderTraversal.java)
 
 ### 1.2.1 非递归版本
 
@@ -96,7 +96,7 @@
     }
 ```
 
-## 1.3 后序遍历（PostOrderTraversal）
+## 1.3 [后序遍历（PostOrderTraversal）](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/src/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/PostOrderTraversal.java)
 
 ### 1.3.1 非递归版本
 
@@ -147,7 +147,7 @@
     }
 ```
 
-## 1.4 层序遍历
+## 1.4 [层序遍历（LevelTraversal）](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/src/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/LevelTraversal.java)
 
 ### 1.4.1 非递归版本
 
@@ -229,15 +229,162 @@
 ## 1.5 基本遍历算法总结
 
 以上这四种算法的时间复杂度都为`O(n)`，空间复杂度最坏情况下为`O(n)`,最好情况为`O(log n)`，其中`n`为二叉树结点的个数。这四种算法是属于最基本的算法，大家应该做到拿到就能从头到尾的码出来。当达到这个熟练度之后，请大家思考一下这个额外空间的最好、最坏情况是怎么来的？这个额外空间是用来存储什么的？还有什么叫做线索二叉树？当然这些问题在下文会有解答，但我强烈建议大家先独立思考一下，这会对接下来要介绍的Morris遍历有极大的促进作用。
-## 1.先导问题
 
-首先要介绍一种一种时间复杂度为O(N)，额外空间复杂度O(1)的二叉树的遍历方式，N为二叉树的结点个数。
+## 2. Morris遍历
 
-之前我们介绍的二叉树遍历方式的额外空间复杂度为O(h)，其中h为树的高度，这是由于二叉树结点的结构来决定的，因为我们要遍历一棵树，过程中免不了要由一个结点返回它的父节点，而结点又不具备指向父节点的指针，所以这时候需要用额外的空间来存储父节点信息（说的更具体一点就是，我们找到了一个结点的左子树，现在该去找这个结点的右子树了，只有先从该左子树返回到父节点，再由父节点去找右子树）。
+### 2.1 遗留问题解决
+
+在`1.5`节提出了几个问题，首先我们要疑惑前面四种基本遍历方法的额外空间是用来存储什么的？额外空间是用来存储父节点信息（说的更具体一点就是，我们找到了一个结点的左子树，现在该去找这个结点的右子树了，只有先从该左子树返回到父节点，再由父节点去找右子树）。知道了额外空间是用来存储什么的我们就知道最坏情况和最好情况的额外空间复杂度是怎么来的了。最好的`O(log n)`是当一颗二叉树是完全二叉树的时候，最坏的`O(n)`是当一棵树每个结点占一层的时候。什么是线索二叉树呢？而所谓的线索二叉树就是n个结点的二叉链表中含有n+1(2n-(n-1)=n+1)个空指针域。利用二叉链表中的空指针域，存放指向结点在某种遍历次序下的前驱和后继结点的指针（这种附加的指针称为"线索"）。加上线索的二叉树称为线索二叉树。
+
+### 2.2 Morris遍历思想
+
+Morris遍历是一种时间复杂度为O(N)，额外空间复杂度O(1)的二叉树的遍历方式，N为二叉树的结点个数。它没有利用额外的空间，而是利用自己的空指针域，构成线索二叉树来存储信息。
 
 **遍历过程：**设来到的当前节点记为`cur`
 
-* 如果`cur`无左孩子，`cur`向右移动(`cur = cur.right`)
-* 如果`cur`有左孩子，找到`cur`左子树上最右的结点，记为`mostRight`
-	* 如果`mostRight`的`right`指针指向`null`，让其指向`cur`，并且`cur`向左移动(`cur = cur.left`)
-	* 如果`mostRight`的`right`指针指向`cur`，让其指向`null`，并且`cur`向右移动(`cur = cur.right`)
+* 如果`cur`无左孩子，`cur`向右移动(`cur = cur.right`)；
+* 如果`cur`有左孩子，找到`cur`左子树上最右的结点，记为`mostRight`：
+	* 如果`mostRight`的`right`指针指向`null`，让其指向`cur`，并且`cur`向左移动(`cur = cur.left`)；
+	* 如果`mostRight`的`right`指针指向`cur`，让其指向`null`，并且`cur`向右移动(`cur = cur.right`)。
+
+### 2.3 [Morris遍历思想实现三种经典遍历](https://github.com/Laputalyc/Algorithm-Leetcode/blob/master/src/%E4%BA%8C%E5%8F%89%E6%A0%91%E9%81%8D%E5%8E%86/MorrisTraversal.java)
+
+在之前的介绍中我们知道三种基本遍历算法中每个结点会被访问三次，而在采用Morris遍历思想的遍历中**有左子树的结点会被访问2次，没有左子树的结点会被访问1次**，对于先序遍历和中序遍历，只会被访问一次的结点在第一次访问时直接打印即可，对于被访问两次的结点，在第一次访问时打印就是先序遍历，在第二次访问时打印就是中序遍历。关于Morris思想实现后序遍历较为复杂，详见`2.3.3`小节。
+
+#### 2.3.1 Morris遍历实现先序遍历
+
+```
+    public static void morrisPre(BiNode head) {
+        if (head == null) {
+            throw new RuntimeException("指定的二叉树无效！");
+        }
+        BiNode cur = head;//当前结点
+        BiNode mostRight = null;//树的最右结点
+        //循环的条件是cur不为空
+        while (cur != null) {
+            mostRight = cur.left;
+            if (mostRight != null) {//cur结点有左子树
+                //首先找到左子树的最右结点,注意是两个条件
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                //如果mostRight的right为null，则让right指向cur并且指针左移
+                if (mostRight.right == null) {//第一次来到该结点
+                    mostRight.right = cur;
+                    //先序遍历第一次访问时打印该结点信息
+                    System.out.print(cur.val + " ");
+                    cur = cur.left;
+                } else {//说明是第二次来到cur结点，则让mostRight的指针复原指向null并且cur右移
+                    mostRight.right = null;
+                    cur = cur.right;
+                }
+            } else {
+                //没有左子树那么就是该结点只会被访问一次，所以直接打印然后指针右移
+                System.out.print(cur.val + " ");
+                cur = cur.right;
+            }
+        }
+    }
+```
+
+#### 2.3.2 Morris遍历实现中序遍历
+
+```
+    public static void morrisIn(BiNode head) {
+        if (head == null) {
+            throw new RuntimeException("指定二叉树无效！");
+        }
+        BiNode cur = head;//当前结点
+        BiNode mostRight = null;//树的最右结点
+        //循环的条件是cur不为空
+        while (cur != null) {
+            mostRight = cur.left;
+            if (mostRight != null) {//cur结点有左子树
+                //首先找到左子树的最右结点,注意是两个条件
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                //如果mostRight的right为null，则让right指向cur并且指针左移
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                } else {//说明是第二次来到cur结点，则让mostRight的指针复原指向null并且cur右移
+                    mostRight.right = null;
+                    //中序遍历第二次访问该节点时打印
+                    System.out.print(cur.val + " ");
+                    cur = cur.right;
+                }
+            } else {
+                //没有左子树那么就是该结点只会被访问一次，所以直接打印然后指针右移
+                System.out.print(cur.val + " ");
+                cur = cur.right;
+            }
+        }
+    }
+```
+
+#### 2.3.3 Morris遍历实现后序遍历
+
+关于采用Morris遍历思想实现后序遍历较为复杂，前面我们已经知道了有左子树的结点会被访问2次，没有左子树的结点会被访问1次。在后序遍历中我们只关注会被访问两次的结点，**在第二次访问到该结点时，逆序打印该结点左子树的右边界，遍历结束后逆序打印整棵树的右边界**。
+
+**例如：**
+
+```
+   1
+ 2  3
+4 5 6 7
+```
+
+访问这棵树的遍历顺序为：`1,2,4,2,5,1,3,6,3,7`（**一定要自己动手画一画**），只关注会2次被访问到的结点为`1,2,2,1,3,3`，首先被第二次访问到的结点是`2`，逆序打印结点2的左子树的右边界：`4`;其次被第二次访问到的节点为`1`，逆序打印结点1的左子树的右边界为：`5,2`；最后被第二次访问到的结点为`3`,逆序打印为：`6`；最后逆序打印打印整棵树的右边界为：`7,3,1`。所以综合起来它的后序遍历结果为：`4,5,2,6,7,3,1`。
+
+关于该算法的实现过程在某些细节处也比较繁琐，比如逆序打印要做到空间复杂度为O(1),需要反转指针，并且在最后还要复原。
+
+```
+    public static void morrisPos(BiNode head) {
+        if (head == null) {
+            return;
+        }
+        BiNode cur = head;
+        BiNode mostRight = null;
+        while (cur != null) {
+            mostRight = cur.left;
+            if (mostRight != null) {
+                while (mostRight.right != null && mostRight.right != cur) {
+                    mostRight = mostRight.right;
+                }
+                if (mostRight.right == null) {
+                    mostRight.right = cur;
+                    cur = cur.left;
+                    continue;
+                } else {
+                    mostRight.right = null;
+                    printEdge(cur.left);
+                }
+            }
+            cur = cur.right;
+        }
+        printEdge(head);
+        System.out.println();
+    }
+    public static void printEdge(BiNode head) {
+        BiNode tail = reverseEdge(head);
+        BiNode cur = tail;
+        while (cur != null) {
+            System.out.print(cur.val + " ");
+            cur = cur.right;
+        }
+        reverseEdge(tail);
+    }
+    public static BiNode reverseEdge(BiNode from) {
+        BiNode pre = null;
+        BiNode next = null;
+        while (from != null) {
+            next = from.right;
+            from.right = pre;
+            pre = from;
+            from = next;
+        }
+        return pre;
+    }
+```
+
